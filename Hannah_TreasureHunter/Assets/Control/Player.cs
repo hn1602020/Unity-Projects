@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public static int counter;
     public static int maxCoins;
     public string levelName;
+    public int JumpF=10; 
 
     public void TrackCoins()
     {
@@ -44,7 +45,12 @@ public class Player : MonoBehaviour
     {
         anim.SetBool("IsRunning",false);
         RB2D.linearVelocity = new Vector2(0, RB2D.linearVelocity.y);
+        Move();
+        Jump();
+    }
 
+    public void Move()
+    {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             Debug.Log("Move Left");
@@ -62,22 +68,23 @@ public class Player : MonoBehaviour
             anim.SetBool("IsRunning",true);
 
         }
+    }
 
+    public void Jump()
+    {
         if (grounded == true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("Jump");
                 RB2D.gravityScale = 1;
-                RB2D.linearVelocity += new Vector2(0, 5);
+                RB2D.linearVelocity += new Vector2(0, JumpF);
                 grounded = false;
                 anim.SetBool("IsJumping",true);
             
             }
            
         }
-
-
     }
 
     void OnCollisionEnter2D(Collision2D collision)
