@@ -19,5 +19,5 @@ MonoBehaviour:
   attackBonus: 0
   defenseBonus: 0
   hpBonus: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8c5867b96f57046a096df1de479e1f91, type: 3}
   xpValue: 0
