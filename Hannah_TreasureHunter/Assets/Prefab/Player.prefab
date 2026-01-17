@@ -182,7 +182,7 @@ MonoBehaviour:
   chestObj: {fileID: 0}
   ChestAnim: {fileID: 0}
   levelName: Level1
-  JumpF: 10
+  JumpF: 6
 --- !u!95 &6603303954086570083
 Animator:
   serializedVersion: 7

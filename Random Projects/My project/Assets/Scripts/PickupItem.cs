@@ -6,14 +6,23 @@ public class PickupItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            // Add item to player's inventory
-            Inventory inv = collision.GetComponent<Inventory>();
-            inv.AddItem(item);
+        if (!collision.CompareTag("Player")) return;
 
-            // Remove pickup object
-            Destroy(gameObject);
+        if (item == null)
+        {
+            Debug.LogError("PickupItem has no ItemSO assigned!", gameObject);
+            return;
         }
+
+        Inventory inv = collision.GetComponent<Inventory>();
+        if (inv == null)
+        {
+            Debug.LogError("Player has no Inventory component!");
+            return;
+        }
+
+        inv.AddItem(item);
+
+        Destroy(gameObject);
     }
 }

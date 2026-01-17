@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public static int counter;
     public static int maxCoins;
     public string levelName;
-    public int JumpF=10; 
+    public int JumpF=1; 
 
     public void TrackCoins()
     {
@@ -99,6 +99,8 @@ public class Player : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        
 
         
     }
