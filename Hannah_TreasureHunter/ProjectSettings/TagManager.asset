@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Coin
   - Chest
+  - Player2
+  - PCoin
   layers:
   - Default
   - TransparentFX

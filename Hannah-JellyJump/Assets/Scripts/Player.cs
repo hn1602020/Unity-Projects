@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Vector3 pos;
     public bool isGameOver = false;
     public AudioSource sfxLose;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -98,9 +99,6 @@ public class Player : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
-
-
-
     }
 }
     
