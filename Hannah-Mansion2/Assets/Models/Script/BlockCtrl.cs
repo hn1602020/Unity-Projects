@@ -7,6 +7,7 @@ public class BlockCtrl : MonoBehaviour
     public float yDelta;
     public int blockNumber;
     public GameObject blockPrefab;
+    public GameObject HangingPrefab;
     public int colorshift;
 
     public Color startColor;
@@ -107,6 +108,11 @@ public class BlockCtrl : MonoBehaviour
         }
     }
 
+    public void IncreaseBlkNum()
+    {
+        blockNumber ++;
+    }
+
     public void SpawnNewBlock()
     {
         Vector3 ypos = new Vector3(0, yStart + yDelta * blockNumber, 0);
@@ -114,8 +120,24 @@ public class BlockCtrl : MonoBehaviour
         GameObject newblk = Instantiate(blockPrefab, new Vector3(ypos.x, ypos.y, ypos.z - 3f), blockPrefab.transform.rotation);
         currentblk = newblk;
         currentblk.transform.localScale = new Vector3 (previousblk.transform.localScale.x, 0.2f, previousblk.transform.localScale.z);
-        blockNumber ++;
         ChangeToNextColour(newblk);
+    }
+    public void SpawnHangingBlock()
+    {
+        if (blockNumber > 0)
+        {
+            float zpos = 0;
+            if (previousblk.transform.position.z < currentblk.transform.position.z ) zpos = previousblk.transform.position.z + l/2 + s/2;
+            else zpos = previousblk.transform.position.z - l/2 + s/2;
+            
+            Vector3 spawnpos = new Vector3( previousblk.transform.position.x, yStart + yDelta * (blockNumber-1), zpos );
+
+            GameObject hanging = Instantiate(HangingPrefab, spawnpos, HangingPrefab.transform.rotation);
+            hanging.transform.localScale = new Vector3(hanging.transform.localScale.x, 0.2f, d );  
+
+
+        }
+       
     }
 
     public void StopCurrent()
@@ -181,8 +203,10 @@ public class BlockCtrl : MonoBehaviour
             Calculation();
             StopCurrent();
             CutOffCurentBlock();
+            SpawnHangingBlock();
             OnLose();
             SpawnNewBlock();
+            IncreaseBlkNum();
             cs.UpdatePos();
         }
     
