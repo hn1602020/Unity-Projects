@@ -1,4 +1,7 @@
+
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class BlockCtrl : MonoBehaviour
 {
@@ -24,6 +27,11 @@ public class BlockCtrl : MonoBehaviour
     public float s;
     public float d;
     public float p;
+    private Rigidbody spblk;
+    public Collider spwblk;
+
+    public TMP_Text scoreui;
+    public GameObject startButton;
 
     
 
@@ -35,10 +43,17 @@ public class BlockCtrl : MonoBehaviour
        yStart = 0.6f;
        yDelta = 0.2f;
        blockNumber = 0;
+       UpdateScore();
 
        // change mainblk to a random colour
        SetRandomColor( mainblk );
        DecideNext();
+    }
+
+    public void StartGame()
+    {
+        startButton.SetActive(false);
+        Debug.Log("Start!");
     }
 
     public void SetRandomColor( GameObject blkgo )
@@ -111,6 +126,15 @@ public class BlockCtrl : MonoBehaviour
     public void IncreaseBlkNum()
     {
         blockNumber ++;
+        UpdateScore();
+    }
+
+    public void UpdateScore()
+    {
+        int score = blockNumber - 1;
+        scoreui.text = "" + score;
+
+        if ( score < 0) scoreui.text = "" + 0;
     }
 
     public void SpawnNewBlock()
@@ -127,15 +151,19 @@ public class BlockCtrl : MonoBehaviour
         if (blockNumber > 0)
         {
             float zpos = 0;
-            if (previousblk.transform.position.z < currentblk.transform.position.z ) zpos = previousblk.transform.position.z + l/2 + s/2;
-            else zpos = previousblk.transform.position.z - l/2 + s/2;
+            if (previousblk.transform.position.z < currentblk.transform.position.z ) zpos = previousblk.transform.position.z + l/2 + d/2;
+            else zpos = previousblk.transform.position.z - l/2 - d/2;
             
             Vector3 spawnpos = new Vector3( previousblk.transform.position.x, yStart + yDelta * (blockNumber-1), zpos );
 
             GameObject hanging = Instantiate(HangingPrefab, spawnpos, HangingPrefab.transform.rotation);
             hanging.transform.localScale = new Vector3(hanging.transform.localScale.x, 0.2f, d );  
+            spblk = this.GetComponent<Rigidbody>();
+            hanging.GetComponent<MeshRenderer>().material.color=currentblk.GetComponent<MeshRenderer>().material.color;
+            spwblk = this.GetComponent<Collider>();
+            Destroy(hanging,1.0f);
 
-
+            //change colour of hanging
         }
        
     }
