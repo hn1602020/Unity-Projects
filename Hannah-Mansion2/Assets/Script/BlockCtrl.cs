@@ -32,9 +32,7 @@ public class BlockCtrl : MonoBehaviour
 
     public TMP_Text scoreui;
     public GameObject startButton;
-
-    
-
+    bool InGame;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,6 +42,7 @@ public class BlockCtrl : MonoBehaviour
        yDelta = 0.2f;
        blockNumber = 0;
        UpdateScore();
+       InGame = false;
 
        // change mainblk to a random colour
        SetRandomColor( mainblk );
@@ -54,6 +53,7 @@ public class BlockCtrl : MonoBehaviour
     {
         startButton.SetActive(false);
         Debug.Log("Start!");
+        InGame = true;
     }
 
     public void SetRandomColor( GameObject blkgo )
@@ -228,6 +228,8 @@ public class BlockCtrl : MonoBehaviour
         Calculation();
         if (Input.GetMouseButtonDown(0))
         {
+            if (InGame == true)
+            {
             Calculation();
             StopCurrent();
             CutOffCurentBlock();
@@ -236,9 +238,11 @@ public class BlockCtrl : MonoBehaviour
             SpawnNewBlock();
             IncreaseBlkNum();
             cs.UpdatePos();
+            }
+        
         }
-    
     }
-    
-}    
+}
+
+
 
