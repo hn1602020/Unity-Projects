@@ -4,6 +4,7 @@ public class Camerascript : MonoBehaviour
 {
     public Vector3 startPos;
     public Vector3 nextPos;
+    public float speed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,6 +17,8 @@ public class Camerascript : MonoBehaviour
     void Update()
     {
         MoveCam();
+        this.transform.Rotate(Vector3.up * speed *Time.deltaTime);
+        
     }
 
     public void UpdatePos()

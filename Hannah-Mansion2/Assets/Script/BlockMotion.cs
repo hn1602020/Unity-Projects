@@ -13,7 +13,7 @@ public class BlockMotion : MonoBehaviour
     void Start()
     {
         start = this.transform.position;
-        end = start + Vector3.forward * 6f;
+        end = start + Vector3.forward * 5f;
     }
 
     // Update is called once per frame

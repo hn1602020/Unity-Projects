@@ -11,6 +11,7 @@ public class BlockCtrl : MonoBehaviour
     public int blockNumber;
     public GameObject blockPrefab;
     public GameObject HangingPrefab;
+    public GameObject PerfectEffect;
     public int colorshift;
 
     public Color startColor;
@@ -27,12 +28,16 @@ public class BlockCtrl : MonoBehaviour
     public float s;
     public float d;
     public float p;
+
     private Rigidbody spblk;
     public Collider spwblk;
 
     public TMP_Text scoreui;
     public GameObject startButton;
     bool InGame;
+    public AudioSource perfectsound;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -211,6 +216,17 @@ public class BlockCtrl : MonoBehaviour
  
 
     }
+    public void Perfect()
+    {
+        if (currentblk != null && previousblk != null && blockNumber > 0)
+        {
+            currentblk.transform.position = new Vector3( previousblk.transform.position.x, currentblk.transform.position.y, previousblk.transform.position.z);
+            GameObject pe = Instantiate(PerfectEffect, currentblk.transform.position - Vector3.up*0.1f, PerfectEffect.transform.rotation);
+            perfectsound.Play();
+            IncreasePitch();
+        }
+    }
+
 
     public void OnLose()
     {
@@ -219,6 +235,15 @@ public class BlockCtrl : MonoBehaviour
             Time.timeScale = 0;
             Debug.Log("lose");
         }
+    }
+
+    public void IncreasePitch()
+    {
+        perfectsound.pitch += 0.2f;
+    }
+    public void ResetPitch()
+    {
+        perfectsound.pitch = 1.0f;
     }
 
 
@@ -230,14 +255,25 @@ public class BlockCtrl : MonoBehaviour
         {
             if (InGame == true)
             {
-            Calculation();
-            StopCurrent();
-            CutOffCurentBlock();
-            SpawnHangingBlock();
-            OnLose();
-            SpawnNewBlock();
-            IncreaseBlkNum();
-            cs.UpdatePos();
+                Calculation();
+                StopCurrent();
+                if(d < 0.2f)
+                {
+                    Perfect();
+                }
+                else
+                {
+                    CutOffCurentBlock();
+                    SpawnHangingBlock();
+                    ResetPitch();
+
+                }
+                
+                
+                OnLose();
+                SpawnNewBlock();
+                IncreaseBlkNum();
+                cs.UpdatePos();
             }
         
         }
