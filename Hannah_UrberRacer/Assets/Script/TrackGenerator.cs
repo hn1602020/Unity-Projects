@@ -27,7 +27,20 @@ public class TrackGenerator : MonoBehaviour
     {
         GameObject track = Instantiate(trackPrefab, Vector3.zero, Quaternion.identity);
         trackList.Add(track);
-        spawnPosition = track.transform.Find("SpawnPosition");
+
+        foreach (Transform child in track.transform)
+        {
+            if (child.name == "SpawnPosition")
+            {
+                spawnPosition = child;
+                break;
+            }
+        }
+
+
+
+
+        //spawnPosition = track.transform.Find("SpawnPosition");
     }
 
     void NextTracks()
